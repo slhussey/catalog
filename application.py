@@ -278,7 +278,10 @@ def show_catalog():
     count_q = categories.statement.with_only_columns([func.count()]).order_by(None)
     count = categories.session.execute(count_q).scalar()
 
-    items = DATABASE_SESSION.query(Item).join(Category).order_by(desc(Item.date_added)).limit(count)
+    items = DATABASE_SESSION.query(Item) \
+                            .join(Category) \
+                            .order_by(desc(Item.date_added)) \
+                            .limit(count)
     if 'username' not in login_session:
         return render_template('unauthCatalog.html', categories=categories, items=items)
     else:

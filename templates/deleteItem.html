@@ -24,16 +24,17 @@
     <div id="content2">
       <h2>Delete Item</h2>
       <form method="post">
+        <p>Are you sure you want to delete the item below?</p>
         <p><label for="title">Title</label><br>
-          <input type="text" maxlength="50" name="title" value="{{item.name}}"></p>
+          <input type="text" maxlength="50" name="title" value="{{item.name}}" disabled></p>
 
         <p><label for="desc">Description</label><br>
-          <textarea cols="80" rows="5">{{item.desc}}</textarea></p>
+          <textarea cols="80" rows="5" disabled>{{item.desc}}</textarea></p>
 
         <p><label for="category">Category</label><br>
-            <input type="text" name="category" value="{{item.category.name}}"></p>
+            <input type="text" name="category" value="{{item.category.name}}" disabled></p>
 
-        <input type="submit" value="Submit"> | <input type="button" name="cancel" value="Cancel" onclick="history.go(-1);return true;">
+        <input type="submit" value="Delete"> | <input type="button" name="cancel" value="Cancel" onclick="history.go(-1);return true;">
       </form>
     </div>
   </body>
