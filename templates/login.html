@@ -1,0 +1,114 @@
+<html>
+  <head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="http://apis.google.com/js/platform.js?onload=start" async defer></script>
+    <meta name="google-signin-client_id" content="{{client_id}}">
+  </head>
+
+  <script>
+    FB.getLoginStatus(function(response) {
+      statusChangeCallback(response);});
+  </script>
+
+  <body>
+
+    <div id="signinButton">
+      <span class="g-signin2" data-onsuccess="onSignIn" data-onfailure="onSignInFailure"
+            data-scope="openid email"
+            data-clientid="{{client_id}}"
+            data-redirecturi="postmessage"
+            data-accesstype="offline"
+            data-cookiepolicy="single_host_origin"
+            data-approvalprompt="force">
+      </span>
+    </div>
+    <div id="result"></div>
+    <script>
+      function onSignIn(authResult) {
+        if (authResult['code']) {
+          // Hide the sign-in button now that
+          // $('signinButton').attr('style', 'display', 'none');
+          // Send the one-time-use code to the server, if the server responds, write
+          // a 'logon successful' message to the web page and then redirect back to
+          // the main catalog page
+          $.ajax({
+            type: 'POST',
+            url: '/gconnect?state={{STATE}}',
+            processDate: false,
+            contentType: 'application/octet-stream; charset=utf-8',
+            data: authResult['code'],
+            success: function(result) {
+              if (result) {
+                setTimeout(function() {window.location.href = "/catalog";}, 4000);
+              } else if (authResult['error']) {
+                console.log("There was an error:" + authResult['error']);
+              } else {
+                //$('#result').html('Failed to make server-side call. Check your configuaration and console.');
+              }
+            }
+          })
+        }
+      }
+    </script>
+
+    <!--FACEBOOK SIGN IN -->
+    <div id="fb-root"></div>
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({appId      : '1258484650918400',
+                 cookie     : true,  // enable cookies to allow the server to access the session
+                 xfbml      : true,  // parse social plugins on this page
+                 version    : 'v2.11' // use version 2.11
+        });
+      };
+
+      // Load the SDK asynchronously
+      (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.11&appId=1258484650918400';
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+
+      // Here we run a very simple test of the Graph API after login is
+      // successful.  See statusChangeCallback() for when this call is made.
+      function sendTokenToServer() {
+        var access_token = FB.getAuthResponse()['accessToken'];
+        FB.api('/me', function(response) {
+          $.ajax({type: 'POST',
+                  url: '/fbconnect?state={{STATE}}',
+                  processData: false,
+                  data: access_token,
+                  contentType: 'application/octet-stream; charset=utf-8',
+            success: function(result) {
+            // Handle or verify the server response if necessary.
+              if (result) {
+                setTimeout(function() {
+                  window.location.href = "/catalog";
+                }, 4000);
+
+              } else {
+                //$('#result').html('Failed to make a server-side call. Check your configuration and console.');
+              }
+            }
+          });
+        });
+      }
+    </script>
+
+    <button>
+      <div class="fb-login-button"
+           data-max-rows="1"
+           data-size="small"
+           data-button-type="continue_with"
+           data-show-faces="false"
+           data-auto-logout-link="true"
+           data-use-continue-as="true">
+      </div>
+
+    </button>
+<!--END FACEBOOK SIGN IN -->
+
+  </body>
+</html>

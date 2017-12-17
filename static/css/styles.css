@@ -1,0 +1,84 @@
+#headingArea {
+  background-color: #1D2141;
+}
+
+body {
+  font-family: sans-serif;
+  background-color: #E1DDCE;
+  margin: 0px;
+}
+
+#heading {
+  color: #ffffff;
+  font-family: Arial, Helvetica, sans-serif;
+  margin-left: 40px;
+  font-size: 2em;
+}
+
+#button {
+  align-content: right;
+  background-color: #E03500;
+  color: white;
+  float: right;
+  margin-top: 8px;
+  margin-right: 40px;
+}
+
+#content {
+  display: flex;
+  background-color: white;
+  margin-top: 10px;
+  margin-left: 40px;
+  margin-right: 40px;
+}
+
+#content2 {
+  background-color: white;
+  margin-top: 10px;
+  margin-left: 40px;
+  margin-right: 40px;
+}
+
+#categories {
+  background-color: white;
+  float: left;
+  width: 20%;
+  padding-top: 10px;
+  padding-left: 10px;
+  border-right: #F4F1E6 2px;
+}
+
+ul {
+  list-style-type: none;
+  padding-left: 0px;
+}
+
+.category {
+  color: red;
+  margin-left: 0px;
+}
+
+.itemCategory {
+  color: gray;
+  font-style: italic;
+}
+
+#items{
+  background-color: white;
+  float: left;
+  width: 76%;
+  padding-top: 10px;
+  padding-left: 20px;
+  border-left: 1px solid #d7d7d7;
+  margin-left: -1px;
+}
+
+#categories:not(:last-child) {
+    border-right: 1px solid #F4F1E6;
+}
+
+h2 {
+  display: inline;
+  font-size: 1.2em;
+  color: #1D2141;
+}

@@ -1,0 +1,41 @@
+<html>
+  <head>
+    <title>Catalog</title>
+    <link rel=stylesheet type=text/css href='{{ url_for('static', filename='css/styles.css') }}'>
+  </head>
+
+  <body>
+
+    <div id="headingArea">
+      <a href="{{url_for('show_catalog')}}"><span id="heading">Catalog App</span></a>
+      <a href="{{url_for('disconnect')}}"><button id="button">Logout</button></a>
+    </div>
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul>
+        {% for message in messages %}
+          <li><strong>{{message}}</strong></li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+    {% endwith %}
+
+    <div id="content2">
+      <h2>Delete Item</h2>
+      <form method="post">
+        <p><label for="title">Title</label><br>
+          <input type="text" maxlength="50" name="title" value="{{item.name}}"></p>
+
+        <p><label for="desc">Description</label><br>
+          <textarea cols="80" rows="5">{{item.desc}}</textarea></p>
+
+        <p><label for="category">Category</label><br>
+            <input type="text" name="category" value="{{item.category.name}}"></p>
+
+        <input type="submit" value="Submit"> | <input type="button" name="cancel" value="Cancel" onclick="history.go(-1);return true;">
+      </form>
+    </div>
+  </body>
+
+</html>

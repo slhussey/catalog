@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <title>Catalog</title>
+    <link rel=stylesheet type=text/css href='{{ url_for('static', filename='css/styles.css') }}'>
+  </head>
+
+  <body>
+
+    <div id="headingArea">
+      <a href="{{url_for('show_catalog')}}"><span id="heading">Catalog App</span></a>
+      <a href="{{url_for('disconnect')}}"><button id="button">Logout</button></a>
+    </div>
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul>
+      {% for message in messages %}
+      <li><strong>{{message}}</strong></li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+
+    <div id="content">
+      <div id="categories">
+        <h2>Categories</h2>
+        <ul>
+          {% for category in categories %}
+          <li class="category"><a href="{{url_for('show_items',cat_ident=category.ident)}}">{{category.name}}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div id="items">
+        <p><a class="category" href="{{url_for('add_item')}}">Add Item</a></p>
+        <h2>{{category.name}} Items ({{count}} items)</h2>
+        <ul>
+          {% for item in items %}
+          <li class="category"><a href="{{url_for('show_item',category_name=item.category.name,item_name=item.name)}}">{{item.name}}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </body>
+
+</html>
