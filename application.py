@@ -18,13 +18,17 @@ from sqlalchemy import create_engine, asc, desc, func
 from sqlalchemy.orm import sessionmaker
 from database_setup import DATABASE, Category, Item, User
 
-CLIENT_ID = json.loads(open('client_secrets.json', 'r').read())[
-    'web']['client_id']
-
 app = Flask(__name__)
 
+#CLIENT_ID = json.loads(open('client_secrets.json', 'r').read())[
+#    'web']['client_id']
+
+with app.open_resource('client_secrets.json','r') as f:    
+    CLIENT_ID = json.load(f)['web']['client_id']
+
+
 # Connect to Database and create database session
-ENGINE = create_engine('sqlite:///catalog.db')
+ENGINE = create_engine('postgresql://catalog:catalog@localhost:5432/catalog')
 DATABASE.metadata.bind = ENGINE
 
 DATABASE_SESSION_FACTORY = sessionmaker(bind=ENGINE)

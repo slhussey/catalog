@@ -42,7 +42,7 @@ class Item(DATABASE):
     __tablename__ = 'items'
     ident = Column(Integer, primary_key=True)
     name = Column(String(50))
-    date_added = Column(String(8))
+    date_added = Column(String(10))
     desc = Column(String)
     owner_ident = Column(Integer, ForeignKey('users.ident'))
     user = relationship('User')
@@ -71,7 +71,7 @@ class Item(DATABASE):
         event.listen(cls, 'before_insert', cls.create_time)
 
 
-ENGINE = create_engine('sqlite:///catalog.db')
+ENGINE = create_engine('postgresql://catalog:catalog@localhost:5432/catalog')
 
 DATABASE.metadata.create_all(ENGINE)
 

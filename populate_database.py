@@ -7,7 +7,7 @@ from database_setup import DATABASE, User, Category, Item
 
 # Bind the engine to the metadata of the Base class so that the
 # declaratives can be accessed through a DATABASE_SESSION instance
-ENGINE = create_engine('sqlite:///catalog.db')
+ENGINE = create_engine('postgresql://catalog:catalog@localhost:5432/catalog')
 DATABASE.metadata.bind = ENGINE
 
 # A DATABASE_SESSION_FACTORY() instance establishes all conversations with the database
